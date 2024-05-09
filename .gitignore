@@ -1,1 +1,6 @@
 .env
+transferupload.service
+main.sh
+metadata.sh
+run.sh
+sauploader.sh
