@@ -1,0 +1,108 @@
+name: 1-Data Entry
+
+description: >
+
+  Enter sermon information for later upload.
+
+
+expectedInputs:
+
+- id: service
+  type: select
+  name: Select Service
+
+  options:
+  - id: null
+    name: ""
+  - id: AM
+    name: AM
+  - id: PM
+    name: PM
+
+- id: date
+  type: string
+  name: Date
+  description: "Input date in this format: YYYY-MM-DD"
+
+- id: title
+  type: string
+  name: Title
+  description: If longer than 30 characters, fill in Short Title as well.
+
+- id: shorttitle
+  type: string
+  name: Short Title
+  description: Short title for Sermon Audio if needed. Must be 30 characters or less.
+
+- id: verse
+  type: string
+  name: Bible Chapter and Verse
+  description: "Input the chapter and verse (main text first), and for each subsequent bible text, separate with a \
+               semicolon and a space, such as `Book 1:1; Book 2:2` If using more than one main bible \
+               text, separate with &, such as `Book 1:1 & Book 2:2`."
+
+- id: speaker
+  type: select
+  name: Speaker
+
+# Change and add as many options as you'd like
+  options:
+  - id: Rev. MyMinister Name
+    name: Rev. MyMinister Name
+
+- id: description
+  type: string[]
+  name: Description
+
+- id: playlist
+  type: select
+  name: Playlist
+  description: Select playlist or series
+
+# Change and add as many options as you'd like
+  options:
+  - id: Hebrews
+    name: Hebrews
+  - id: Revelation
+    name: Revelation
+  - id: Special Sermons
+    name: Special Sermons
+  - id: Guest Sermons
+    name: Guest Sermons
+  - id: Psalms
+    name: Psalms
+  - id: Baptism
+    name: Baptism
+
+  default: Hebrews
+
+- id: privacy
+  type: select
+  name: Privacy
+  description: Select privacy
+
+  options:
+  - id: public
+    name: Public
+  - id: unlisted
+    name: Unlisted
+  - id: private
+    name: Private
+
+  default: public
+
+execution:
+
+  application: bash
+
+  arguments:
+  - /path/to/sample.sh # change
+  - ${inputs.privacy}
+  - ${inputs.title}
+  - ${inputs.playlist}
+  - ${inputs.description}
+  - ${inputs.shorttitle}
+  - ${inputs.verse}
+  - ${inputs.speaker}
+  - ${inputs.service}
+  - ${inputs.date}

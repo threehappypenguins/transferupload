@@ -1,3 +1,25 @@
+<h1>Transfer Upload</h1>
+
+This is a series of bash scripts that will do the following:
+1. Detect a complete MP4 transfer
+2. Email that the transfer was completed (or interrupted)
+3. Upload the video to YouTube and Sermon Audio simultaneously
+4. Wait for video to be finished processing on Sermon Audio, then publish and post to Facebook and Twitter (if they are connected via Sermon Audio)
+5. Add MP4 metadata
+6. Rename for archiving
+
+For creating the metadata files:
+* `am-yt-data.json`
+* `am-sa-data.json`
+* `am-data.json`
+* `pm-yt-data.json`
+* `pm-sa-data.json`
+* `pm-data.json`
+
+I highly suggest using [Jobson](https://github.com/adamkewley/jobson). See `sample.sh` and `spec.yml` in the `jobson` folder for setup suggestions and a script.
+
+<h2>Installation</h2>
+
 Before you begin, if you want the emailing feature to work, you will need to set up your system to handle outgoing mail. [These are instructions](https://apiit.atlassian.net/wiki/spaces/ITSM/pages/1205567492/How+to+configure+postfix+relay+to+Office365+on+Ubuntu) for setting it up with Office365.
 
 1. Install prerequisites:
@@ -58,7 +80,9 @@ systemctl status transferupload
 sudo ./uninstall.sh
 ```
 
-10. Note: If you get the error `—include or —includei is an unrecognized option`, you need to install a build of inotify-tools:
+<h2>Other Info</h2>
+
+If you get the error `—include or —includei is an unrecognized option`, you need to install a build of inotify-tools:
 ```console
 sudo apt remove inotify-tools
 cd
