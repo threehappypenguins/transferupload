@@ -26,7 +26,7 @@ Before you begin, if you want the emailing feature to work, you will need to set
 
 1. Install prerequisites:
 ```console
-sudo apt install inotify-tools python-is-python3
+sudo apt install inotify-tools python-is-python3 atomicparsley exiftool
 ```
 
 2. Install MP4Box build following [these instructions](https://github.com/gpac/gpac/wiki/GPAC-Build-Guide-for-Linux#mp4box--gpac-only-minimal-static-build).
