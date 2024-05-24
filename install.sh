@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if the script is run as root
+if [ "$EUID" -ne 0 ]; then
+  echo "This script must be run as root. Please use sudo."
+  exit 1
+fi
+
 # Get the username of the user who invoked sudo
 sudo_user="$SUDO_USER"
 
@@ -8,19 +14,21 @@ if [ -f ./.env ] && [ -f ./transferupload.service ]; then
     HOME=$(eval echo ~$sudo_user)
 
     # Check if the scripts are executable before running chmod
-    if [ -x $HOME/transferupload/run.sh ] && \
-       [ -x $HOME/transferupload/main.sh ] && \
-       [ -x $HOME/transferupload/metadata.sh ] && \
-       [ -x $HOME/transferupload/sauploader.sh ] && \
-       [ -x $HOME/transferupload/uninstall.sh ]; then
+    if [ -x $HOME/transferupload/src/run.sh ] && \
+       [ -x $HOME/transferupload/src/main.sh ] && \
+       [ -x $HOME/transferupload/src/metadata.sh ] && \
+       [ -x $HOME/transferupload/src/uploader.sh ] && \
+       [ -x $HOME/transferupload/src/mailer.sh ] && \
+       [ -x $HOME/transferupload/src/setup_json.sh ] && \
+       [ -x $HOME/transferupload/src/uninstall.sh ]; then
         echo "Scripts are already executable. Skipping..."
     else
         echo "Making scripts executable..."
-        chmod +x $HOME/transferupload/run.sh \
-        $HOME/transferupload/main.sh \
-        $HOME/transferupload/metadata.sh \
-        $HOME/transferupload/sauploader.sh \
-        $HOME/transferupload/uninstall.sh
+        chmod +x $HOME/transferupload/src/run.sh \
+        $HOME/transferupload/src/main.sh \
+        $HOME/transferupload/src/metadata.sh \
+        $HOME/transferupload/src/sauploader.sh \
+        $HOME/transferupload/src/uninstall.sh
     fi
 
     # Check if configuration folder exists
@@ -72,6 +80,19 @@ if [ -f ./.env ] && [ -f ./transferupload.service ]; then
     # Service is not active, start it
         echo "Starting transferupload service..."
         sudo systemctl start transferupload
+    fi
+
+    # Check if the ExifTool config file already exists
+    if [ ! -f "$HOME/.ExifTool_config" ]; then
+        # Create ExifTool's large file support config file
+        cat <<-EOF > "$HOME/.ExifTool_config"
+%Image::ExifTool::UserDefined::Options = (
+    LargeFileSupport => 1,
+);
+EOF
+        echo "ExifTool's config file created."
+    else
+        echo "ExifTool's config file already exists. Skipping creation."
     fi
 
     echo "Done."
