@@ -1,5 +1,7 @@
 <h1>Transfer Upload</h1>
 
+I needed a way to automate uploading my church's sermons right after they were finished recording, with minimal effort on Sunday so I could make better use of the day. Sometime before Sunday, when I find out the title and all necessary metadata, I add the metadata to some .json files. Then on Sunday, the recording is sent to the server, and the scripts take care of everything.
+
 This is a series of bash scripts that will do the following:
 1. Detect a complete MP4 transfer
 2. Email that the transfer was completed (or interrupted)
@@ -8,7 +10,7 @@ This is a series of bash scripts that will do the following:
 5. Add MP4 metadata
 6. Rename for archiving
 
-For creating the metadata files:
+For an easy way of creating the metadata files:
 * `am-yt-data.json`
 * `am-sa-data.json`
 * `am-data.json`
