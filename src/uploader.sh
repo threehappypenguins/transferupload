@@ -49,9 +49,16 @@ SAuploader() {
 import json
 import sys
 
-response = json.loads(sys.stdin.read())
-print(response["uploadURL"])
-    '
+try:
+    response = json.loads(sys.stdin.read())
+    print(response["uploadURL"])
+except json.JSONDecodeError as e:
+    print(f"JSONDecodeError: {e}")
+    print(f"Invalid JSON response: {sys.stdin.read()}")
+except KeyError as e:
+    print(f"KeyError: {e}")
+    print(f"Response JSON: {response}")
+'
 
      URL=$(echo $UPLOAD_RESPONSE | python -c "$GET_URL_SNIPPET" )
 
