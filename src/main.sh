@@ -39,14 +39,18 @@ mailer
 
 echo "Done sending mail."
 
-# Move the completed file to the Sermon Archive.
-INPUT_BASE=$(basename "$INPUT_FILE")
-OUTPUTFILENAMEFULL="$ARCHIVE_PATH/$YYYY/$INPUT_BASE"
-mv "${INPUT_FILE}" "${OUTPUTFILENAMEFULL}"
-echo "Done moving file to ${OUTPUTFILENAMEFULL}."
-OUTPUTFILENAME=$(basename "$OUTPUTFILENAMEFULL")
-NEWOUTPUT=$(MP4Box -info $OUTPUTFILENAMEFULL 2>&1)
-echo "This is the new filename: $OUTPUTFILENAME"
+if [[ ${OUTPUT} == *"Movie Info"* ]]; then
+  # Move the completed file to the Sermon Archive.
+  INPUT_BASE=$(basename "$INPUT_FILE")
+  OUTPUTFILENAMEFULL="$ARCHIVE_PATH/$YYYY/$INPUT_BASE"
+  mv "${INPUT_FILE}" "${OUTPUTFILENAMEFULL}"
+  echo "Done moving file to ${OUTPUTFILENAMEFULL}."
+  OUTPUTFILENAME=$(basename "$OUTPUTFILENAMEFULL")
+  NEWOUTPUT=$(MP4Box -info $OUTPUTFILENAMEFULL 2>&1)
+  echo "This is the new filename: $OUTPUTFILENAME"
+else
+  continue
+fi
 
 # Establish which json files to use
 setup_json
@@ -54,7 +58,7 @@ setup_json
 # When the transfer is complete, attempt to upload the mp4 by
 # checking if json exists:
 if [[ ! -f $JSON ]]; then
-  echo "No json file found. Not uploading; not adding metadata. Please manually upload and add metadata.\n"
+  echo "No json file found. Not uploading; not adding metadata. Please manually upload and add metadata."
   continue
 elif [[ ${NEWOUTPUT} != *"Movie Info"* ]]; then
   continue
