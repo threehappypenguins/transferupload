@@ -53,6 +53,8 @@ metadata() {
   if [[ $SPEAKER != *$MINISTER* ]];
   then
     guestspeaker=" ($SPEAKER)"
+  else
+    guestspeaker=""
   fi
 
   if [[ $SERIES = *$SERIES_OTHER1* ]];
