@@ -27,8 +27,10 @@ if [ -f ./.env ] && [ -f ./transferupload.service ]; then
         chmod +x $HOME/transferupload/src/run.sh \
         $HOME/transferupload/src/main.sh \
         $HOME/transferupload/src/metadata.sh \
-        $HOME/transferupload/src/sauploader.sh \
-        $HOME/transferupload/src/uninstall.sh
+        $HOME/transferupload/src/uploader.sh \
+        $HOME/transferupload/src/mailer.sh \
+        $HOME/transferupload/src/setup_json.sh \
+        $HOME/transferupload/uninstall.sh
     fi
 
     # Check if configuration folder exists
