@@ -94,15 +94,8 @@ metadata() {
     series=$SERIES_OTHER5_FN
   fi
 
-  # Remove ? and : from the title for filename renaming
-  if [[ $TITLE = *"?"* ]];
-  then
-    filetitle=${TITLE%?}
-  elif [[ $TITLE = *":"* ]]; then
-    filetitle=$(echo "${TITLE}" | sed -r 's/[:]+/-/g')
-  else
-    filetitle=$TITLE
-  fi
+  # Remove ? and : and / from the title for filename renaming
+  filetitle=$(echo "$TITLE" | sed -r 's/[:]+/-/g; s/[?\/]//g')
 
   # Add metadata tags to MP4
   AtomicParsley $OUTPUTFILENAMEFULL \
